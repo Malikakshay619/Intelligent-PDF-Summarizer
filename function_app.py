@@ -12,7 +12,7 @@ import requests
 from datetime import datetime
 
 my_app = df.DFApp(http_auth_level=func.AuthLevel.ANONYMOUS)
-blob_service_client = BlobServiceClient.from_connection_string(os.environ.get("BLOB_STORAGE_ENDPOINT"))
+blob_service_client = BlobServiceClient.from_connection_string(os.environ.get("AzureWebJobsStorage"))
 
 @my_app.blob_trigger(arg_name="myblob", path="input", connection="BLOB_STORAGE_ENDPOINT")
 @my_app.durable_client_input(client_name="client")
@@ -86,3 +86,20 @@ def write_doc(results):
     logging.info("uploading to blob" + results['summary']['content'])
     container_client.upload_blob(name=fileName, data=results['summary']['content'])
     return str(summary + ".txt")
+
+
+@my_app.route(route="SummarizePDF")
+@my_app.durable_client_input(client_name="client")
+async def SummarizePDF(req: func.HttpRequest, client) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    try:
+        req_body = req.get_json()
+        blob_url = req_body.get("blob_url")
+        blob_name = blob_url.split("/")[-1]
+    except Exception as e:
+        return func.HttpResponse(f"Invalid request format: {e}", status_code=400)
+
+    await client.start_new("process_document", client_input=blob_name)
+    return func.HttpResponse(f"Started summarizing blob: {blob_name}", status_code=202)
+
+print("DEBUG AzureWebJobsStorage:", os.environ.get("AzureWebJobsStorage"))

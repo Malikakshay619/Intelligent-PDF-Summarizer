@@ -1,0 +1,13 @@
+{
+"IsEncypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "BLOB_STORAGE_ENDPOINT": "DefaultEndpointsProtocol=https;AccountName=pdfsummarystorage15740;AccountKey=tiTuCjG8m+NTNbo4HPj3y7yjbpFiNk8tsvg4IJamzQ/tvL67ZnWZ5vI4obcrJBhFDyCMok0zOOFN+AStJdWJ1Q==;EndpointSuffix=core.windows.net",
+    "COGNITIVE_SERVICES_ENDPOINT": "https://cognitive-service.openai.azure.com/",
+    "AZURE_OPENAI_ENDPOINT": "https://cognitive-service.openai.azure.com/openai/deployments/gpt-4.1/chat/completions?api-version=2025-01-01-preview",
+    "AZURE_OPENAI_KEY": "EgFuYLJINZpYF3oJkxoHVQvrssyq0SHAhw71CvCJBe4cFdtwmSV6JQQJ99BFACYeBjFXJ3w3AAABACOGmN6U",
+    "CHAT_MODEL_DEPLOYMENT_NAME": "gpt-4.1"
+  }
+}
